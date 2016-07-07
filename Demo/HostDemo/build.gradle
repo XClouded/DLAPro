@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+apply from: '../../ext-android.gradle'
+
+android {
+    defaultConfig {
+        applicationId project.applicationId
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file(project.storeFile)
+            storePassword project.storePassword
+            keyAlias project.keyAlias
+            keyPassword project.keyPassword
+        }
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            zipAlignEnabled true
+            versionNameSuffix "-release"
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+        }
+
+        debug {
+            shrinkResources false
+            zipAlignEnabled false
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+
+    }
+
+
+    //修改apk名
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def appName = project.name
+            appName += "-"
+            appName += defaultConfig.versionName
+            if (variant.buildType.versionNameSuffix != null) {
+                appName += variant.buildType.versionNameSuffix
+            }
+            appName += ".apk"
+            output.outputFile = new File(output.outputFile.parent, appName)
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+//    compile project(path: ':Bundle:hookplugin')
+}
