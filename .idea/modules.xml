@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Bundle/Bundle.iml" filepath="$PROJECT_DIR$/Bundle/Bundle.iml" />
       <module fileurl="file://$PROJECT_DIR$/DLAPro.iml" filepath="$PROJECT_DIR$/DLAPro.iml" />
       <module fileurl="file://$PROJECT_DIR$/Demo/Demo.iml" filepath="$PROJECT_DIR$/Demo/Demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Demo/HostDemo/app.iml" filepath="$PROJECT_DIR$/Demo/HostDemo/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Demo/HostDemo/HostDemo.iml" filepath="$PROJECT_DIR$/Demo/HostDemo/HostDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/Bundle/hookplugin/hookplugin.iml" filepath="$PROJECT_DIR$/Bundle/hookplugin/hookplugin.iml" />
     </modules>
   </component>
