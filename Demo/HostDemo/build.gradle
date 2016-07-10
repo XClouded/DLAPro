@@ -1,10 +1,17 @@
 apply plugin: 'com.android.application'
 apply from: '../../ext-android.gradle'
+apply from: '../../ext-mk-plugin.gradle'
 
 android {
     defaultConfig {
         applicationId "com.cmcc.host.demo"
         multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
     //修改apk名
     applicationVariants.all { variant ->
@@ -22,4 +29,10 @@ android {
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':Bundle:hookplugin')
+    if (!solidMode) {
+        compile project(':Demo:plugint1')
+//        compile project(':Demo:plugint2')
+    }
 }

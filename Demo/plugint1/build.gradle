@@ -4,7 +4,7 @@ if (solidMode) {
         packageName = 'com.cmcc.plguin.demo1'
         apkName = packageName.replace('.', '_')
     }
-    apply from: '../../ext-sub-android.gradle'
+    apply from: '../../ext-plguin-android.gradle'
 } else {
 
     apply plugin: 'com.android.library'

@@ -1,0 +1,47 @@
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('MMddHH', TimeZone.getDefault())
+    printf(formattedDate)
+    return formattedDate
+}
+
+def computeVersionName() {
+    return project.versionName + "." + project.versionCode + "." + buildTime()
+}
+
+//打包后产出物复制到build-outputs目录。apk、manifest、mapping
+task copyReleaseOutputs(type: Copy) {
+    def appName = rootProject.name + "-" + computeVersionName() + "-release.apk";
+    println("copyReleaseOutputs: " + appName)
+    from("$buildDir/outputs/apk/${appName}") {
+        rename "${appName}", rootProject.hostAppName
+    }
+    from "$buildDir/intermediates/manifests/full/release/AndroidManifest.xml"
+    from("$buildDir/outputs/mapping/release/mapping.txt") {
+        rename 'mapping.txt', 'demo-base-mapping.txt'
+    }
+    into new File(rootDir, 'build-outputs')
+}
+//执行Release之后就执行拷贝文件Task
+assembleRelease<<{
+    copyReleaseOutputs.execute()
+}
+
+clean {
+    delete buildDir
+    delete "${rootDir}/build-outputs/${rootProject.hostAppName}"
+    delete "${rootDir}/build-outputs/AndroidManifest.xml"
+    delete "${rootDir}/build-outputs/demo-base-mapping.txt"
+    delete "${rootDir}/build-outputs/demo-mapping-final.txt"
+}
+import org.apache.tools.ant.taskdefs.condition.Os
+
+//定义zipalign工具path
+def getZipAlignPath(){
+    def zipAlignPath = "${android.sdkDirectory}/build-tools/${android.buildToolsVersion}/zipalign"
+    if(Os.isFamily(Os.FAMILY_WINDOWS)){
+        zipAlignPath += '.exe'
+    }
+    assert (new File(zipAlignPath)).exists() : '没有找到zipalign应用程序！'
+    return zipAlignPath
+}
