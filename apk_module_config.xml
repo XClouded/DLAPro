@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApkModules>
+
+    //自定义资源ID
+    <Module  packageName="com.cmcc.plguin.demo1" resourceId="0x31"/>
+
+    <!--<Module  packageName="com.cmcc.plguin.demo2" resourceId="0x36"/>-->
+
+</ApkModules>
