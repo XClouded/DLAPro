@@ -11,6 +11,29 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+ext{
+    //这是工程根目录
+    cmccRoot = project(":").projectDir
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    // 从系统环境变量中或者local.properties配置文件中读取SDK位置
+    if(System.getenv("ANDROID_HOME")!=null){
+        sdkDir = System.getenv("ANDROID_HOME")
+    }
+    else{ // 在local.properties中定义
+        sdkDir = properties.getProperty('sdk.dir')
+    }
+
+    solidMode = true
+    //可以在local.properties里修改这个值。添加一行 solidMode=false 即可。
+    solidModeConfigValue = properties.getProperty('solidMode')
+    if('true'.equalsIgnoreCase(solidModeConfigValue)){
+        solidMode = true
+    }
+    else if ('false'.equalsIgnoreCase(solidModeConfigValue)){
+        solidMode = false
+    }
+}
 
 allprojects {
     repositories {

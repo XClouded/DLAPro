@@ -1,0 +1,13 @@
+if (solidMode) {
+    //打包成插件的配置
+    project.ext {
+        packageName = 'com.cmcc.plguin.demo1'
+        apkName = packageName.replace('.', '_')
+    }
+    apply from: '../../ext-sub-android.gradle'
+} else {
+
+    apply plugin: 'com.android.library'
+    apply from: '../../ext-android.gradle'
+
+}

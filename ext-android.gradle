@@ -66,6 +66,33 @@ if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.andro
                 'META-INF/RELEASE_NOTES.txt'
         ]
 
+        signingConfigs {
+            debug {
+                storeFile file(project.storeFile)
+                storePassword project.storePassword
+                keyAlias project.keyAlias
+                keyPassword project.keyPassword
+            }
+        }
+
+        buildTypes {
+            release {
+                shrinkResources true
+                zipAlignEnabled true
+                versionNameSuffix "-release"
+                signingConfig signingConfigs.debug
+                minifyEnabled true
+            }
+
+            debug {
+                shrinkResources false
+                zipAlignEnabled false
+                versionNameSuffix "-debug"
+                signingConfig signingConfigs.debug
+            }
+
+        }
+
         lintOptions {
             abortOnError false
             quiet false
@@ -78,6 +105,14 @@ if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.andro
             javaMaxHeapSize "2048M"
         }
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
 }
 
 if (plugins.hasPlugin('com.android.library')) {

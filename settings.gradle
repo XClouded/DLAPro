@@ -1,2 +1,3 @@
 include ':Demo:HostDemo'
+include ':Demo:plugint1'
 include ':Bundle:hookplugin'
