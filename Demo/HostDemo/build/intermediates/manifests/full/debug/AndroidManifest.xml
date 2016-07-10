@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cmcc.host.demo"
     android:versionCode="1"
-    android:versionName="1.0.1.1.070723-debug" >
+    android:versionName="1.0.1.1.071022-debug" >
 
     <uses-sdk
         android:minSdkVersion="9"

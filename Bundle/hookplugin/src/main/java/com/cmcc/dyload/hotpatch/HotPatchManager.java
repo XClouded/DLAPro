@@ -20,14 +20,15 @@ import java.util.TreeMap;
  */
 public class HotPatchManager {
 
-    private static volatile HotPatchManager instance;
-    private static final Logger log;
-    private static SortedMap<Integer, HotPatchItem> sortedMap;
+    private static volatile HotPatchManager                  instance;
+    private static final    Logger                           log;
+    private static          SortedMap<Integer, HotPatchItem> sortedMap;
 
     private File patchDir;
 
+
     static {
-        log= LoggerFactory.getLogcatLogger("HotPatchItem");
+        log = LoggerFactory.getLogcatLogger("HotPatchItem");
     }
 
     private HotPatchManager() {
@@ -39,6 +40,7 @@ public class HotPatchManager {
                 return rhs.compareTo(lhs);
             }
         });
+
     }
 
     public static HotPatchManager getInstance() {
@@ -64,13 +66,15 @@ public class HotPatchManager {
                     if (item != null && item.isPatchInstalled()) {
                         try {
                             item.optDexFile();
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
             }
-        } catch (Throwable e) {
+        }
+        catch (Throwable e) {
             log.log("Failed to run pacth", Logger.LogLevel.ERROR, e);
         }
     }
@@ -80,7 +84,7 @@ public class HotPatchManager {
      */
     public boolean installHotPatch(String hotFixFileName, InputStream inputStream) {
         if (TextUtils.isEmpty(hotFixFileName) || inputStream == null) {
-            return  false;
+            return false;
         }
 
         boolean ret = true;
@@ -89,7 +93,7 @@ public class HotPatchManager {
             patchDir.mkdirs();
         }
         try {
-            int rst_index = hotFixFileName.lastIndexOf("_rst");
+            int     rst_index   = hotFixFileName.lastIndexOf("_rst");
             boolean isUnstalled = false;
             if (rst_index >= 0) {
                 String fileName = hotFixFileName.substring(0, rst_index);
@@ -102,25 +106,28 @@ public class HotPatchManager {
                 }
 
                 String storageFile = hotFixFileName + "_" + version;
-                HotPatchItem hotPatchItem = new HotPatchItem(new File(patchDir, storageFile), inputStream);
+                HotPatchItem hotPatchItem = new HotPatchItem(new File(patchDir, storageFile),
+                                                             inputStream);
                 sortedMap.put(version, hotPatchItem);
 
                 if (hotPatchItem != null && hotPatchItem.isPatchInstalled()) {
                     try {
                         hotPatchItem.optHotFixDexFile();
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                         ret = false;
                     }
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             log.log("installHotPatch error", Logger.LogLevel.ERROR, e);
             ret = false;
         }
 
-        return  ret;
+        return ret;
     }
 
     public void purge() {
@@ -139,7 +146,8 @@ public class HotPatchManager {
                 }
             }
             file.delete();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -149,7 +157,8 @@ public class HotPatchManager {
             int key = 0;
             for (Map.Entry<Integer, HotPatchItem> entry : sortedMap.entrySet()) {
                 HotPatchItem item = entry.getValue();
-                if (item != null && item.getHotPatchId().toLowerCase().contains(hotFixFileName.toLowerCase())) {
+                if (item != null && item.getHotPatchId().toLowerCase().contains(
+                        hotFixFileName.toLowerCase())) {
                     item.purge();
                     key = entry.getKey();
                     break;
@@ -175,10 +184,12 @@ public class HotPatchManager {
                     HotPatchItem hotPatchItem = new HotPatchItem(file);
                     try {
                         int separatorIndex = file.getName().lastIndexOf("_");
-                        String filter = file.getName().substring(separatorIndex + 1, file.getName().length());
+                        String filter = file.getName().substring(separatorIndex + 1,
+                                                                 file.getName().length());
                         int version = Integer.parseInt(filter);
                         sortedMap.put(version, hotPatchItem);
-                    } catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
