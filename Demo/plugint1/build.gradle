@@ -6,8 +6,6 @@ if (solidMode) {
     }
     apply from: '../../ext-plguin-android.gradle'
 } else {
-
     apply plugin: 'com.android.library'
     apply from: '../../ext-android.gradle'
-
 }

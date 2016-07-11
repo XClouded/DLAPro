@@ -1,3 +1,4 @@
+//插件 编译 构建脚本
 buildscript {
     repositories {
         mavenCentral()
@@ -119,8 +120,8 @@ task compileRelease(type: JavaCompile,dependsOn:'aaptRelease') {
     inputs.file "$sdk.androidJar"
     //libs下文件
     inputs.files fileTree("${projectDir}/libs").include('*.jar')
-    inputs.file "${rootDir}/Demo/HostDemo/build/intermediates/classes-proguard/release/classes.jar"
-    inputs.files fileTree("$projectDir/src").include('**/*.java')
+//    inputs.file "${rootDir}/Demo/HostDemo/build/intermediates/classes-proguard/release/classes.jar"
+    inputs.files fileTree("$projectDir/src/main/java").include('**/*.java')
     inputs.files fileTree("$buildDir/gen/r").include('**/*.java')
 
     outputs.dir "$buildDir/intermediates/classes"
@@ -129,17 +130,15 @@ task compileRelease(type: JavaCompile,dependsOn:'aaptRelease') {
     classpath = files(
             "${sdk.androidJar}",
             "${sdk.apacheJar}",
-    	    fileTree("${projectDir}/libs").include('*.jar'),
-
-
-    	    "${rootDir}/sample/build/intermediates/classes-proguard/release/classes.jar"
+    	    fileTree("${projectDir}/libs").include('*.jar')
+//    	    "${rootDir}/sample/build/intermediates/classes-proguard/release/classes.jar"
     	)
 
     destinationDir = file("$buildDir/intermediates/classes")
 
     dependencyCacheDir = file("${buildDir}/dependency-cache")
 
-    source = files(fileTree("$projectDir/src").include('**/*.java'),
+    source = files(fileTree("$projectDir/src/main/java").include('**/*.java'),
             fileTree("$buildDir/gen/r").include('**/*.java'))
     options.encoding = 'UTF-8'
 }

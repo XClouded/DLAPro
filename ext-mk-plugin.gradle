@@ -1,3 +1,4 @@
+//打包插件gradle脚本
 def buildTime() {
     def date = new Date()
     def formattedDate = date.format('MMddHH', TimeZone.getDefault())

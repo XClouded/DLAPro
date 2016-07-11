@@ -1,3 +1,4 @@
+//常用app/library 项目的配置gradle文件
 def buildTime() {
     def date = new Date()
     def formattedDate = date.format('MMddHH',TimeZone.getDefault())
@@ -97,12 +98,23 @@ if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.andro
             abortOnError false
             quiet false
             showAll true
+            checkReleaseBuilds true
+            abortOnError false
+            check 'NewApi'  //新API
+            showAll true
+            textReport true
+            textOutput file("${cmccRoot}/build-outputs/lint/${project.name}_lint-report.txt")
+            xmlReport true
+            xmlOutput file("${cmccRoot}/build-outputs/lint/${project.name}_lint-report.xml")
+            htmlReport true
+            htmlOutput file("${cmccRoot}/build-outputs/lint/${project.name}_lint-report.html")
         }
 
         dexOptions {
             preDexLibraries = false
             incremental true
             javaMaxHeapSize "2048M"
+
         }
     }
 }
